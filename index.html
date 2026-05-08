@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name | PhD Candidate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f6f3ed;
+    --accent: #8b4513;
+    --accent-light: #c49a6c;
+    --muted: #6b6560;
+    --divider: #d4cec5;
+    --quote-bg: #eee8dd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── Grain overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 32px 100px;
+  }
+
+  /* ── Header ── */
+  header {
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  header h1 {
+    font-family: 'Crimson Pro', 'Noto Serif SC', serif;
+    font-weight: 300;
+    font-size: 2.8rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  header .subtitle {
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── Random Quote ── */
+  .quote-card {
+    background: var(--quote-bg);
+    border-left: 3px solid var(--accent);
+    padding: 24px 28px;
+    margin-bottom: 48px;
+    border-radius: 0 6px 6px 0;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.15s both;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .quote-card:hover {
+    background: #e8e1d4;
+  }
+
+  .quote-card::before {
+    content: '"';
+    font-family: 'Crimson Pro', serif;
+    font-size: 4rem;
+    color: var(--accent-light);
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    line-height: 1;
+    opacity: 0.5;
+  }
+
+  .quote-text {
+    font-family: 'Crimson Pro', 'Noto Serif SC', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--ink);
+    padding-left: 8px;
+    min-height: 1.8em;
+    transition: opacity 0.4s ease;
+  }
+
+  .quote-hint {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 12px;
+    padding-left: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .quote-card:hover .quote-hint {
+    opacity: 1;
+  }
+
+  /* ── Sections ── */
+  section {
+    margin-bottom: 40px;
+  }
+
+  section h2 {
+    font-family: 'Crimson Pro', 'Noto Serif SC', serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  section p {
+    font-size: 0.95rem;
+    color: #3a3835;
+    margin-bottom: 12px;
+  }
+
+  /* ── Section staggered animation ── */
+  section:nth-child(1) { animation: fadeUp 0.8s ease 0.3s both; }
+  section:nth-child(2) { animation: fadeUp 0.8s ease 0.4s both; }
+  section:nth-child(3) { animation: fadeUp 0.8s ease 0.5s both; }
+  section:nth-child(4) { animation: fadeUp 0.8s ease 0.6s both; }
+  section:nth-child(5) { animation: fadeUp 0.8s ease 0.7s both; }
+
+  /* ── Publication list ── */
+  .pub-list {
+    list-style: none;
+  }
+
+  .pub-list li {
+    font-size: 0.92rem;
+    color: #3a3835;
+    margin-bottom: 14px;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.65;
+  }
+
+  .pub-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+
+  .pub-list .title {
+    font-weight: 500;
+  }
+
+  .pub-list .venue {
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  /* ── Contact links ── */
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+  }
+
+  .contact-row a {
+    font-size: 0.92rem;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .contact-row a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  .contact-row a svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--divider);
+    font-size: 0.8rem;
+    color: var(--muted);
+    animation: fadeUp 0.8s ease 0.8s both;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .page { padding: 36px 20px 60px; }
+    header h1 { font-size: 2rem; }
+    .quote-card { padding: 20px 22px; }
+    .quote-text { font-size: 1.05rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>张三 / San Zhang</h1>
+    <div class="subtitle">PhD Candidate · Department of Computer Science · University of Example</div>
+  </header>
+
+  <!-- ✨ 随机名言卡片 ✨ -->
+  <div class="quote-card" id="quoteCard" onclick="showNewQuote()">
+    <div class="quote-text" id="quoteText"></div>
+    <div class="quote-hint">点击换一句 ↻</div>
+  </div>
+
+  <section>
+    <h2>About</h2>
+    <p>
+      I am a final-year PhD student at the University of Example, advised by Prof. XX.
+      My research focuses on [your research area]. I am passionate about [brief description].
+    </p>
+    <p>
+      Prior to my PhD, I obtained my B.S. from XX University in 20XX.
+    </p>
+  </section>
+
+  <section>
+    <h2>Research Interests</h2>
+    <p>
+      Natural Language Processing · Large Language Models · Information Retrieval · [Your Areas]
+    </p>
+  </section>
+
+  <section>
+    <h2>Selected Publications</h2>
+    <ul class="pub-list">
+      <li>
+        <span class="title">Your Paper Title Here.</span><br>
+        <strong>Your Name</strong>, Coauthor A, Coauthor B.<br>
+        <span class="venue">Conference Name (CONF), 2025.</span>
+      </li>
+      <li>
+        <span class="title">Another Great Paper Title.</span><br>
+        Coauthor A, <strong>Your Name</strong>, Coauthor B.<br>
+        <span class="venue">Journal of Something Important, 2024.</span>
+      </li>
+      <li>
+        <span class="title">Yet Another Paper You're Proud Of.</span><br>
+        <strong>Your Name</strong>, Coauthor C.<br>
+        <span class="venue">Workshop on Cool Stuff (WCS @ NeurIPS), 2023.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <div class="contact-row">
+      <a href="mailto:your.email@university.edu">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Email
+      </a>
+      <a href="https://scholar.google.com/" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-2a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM1 8l11-7 11 7v2H1V8z"/></svg>
+        Google Scholar
+      </a>
+      <a href="https://github.com/" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6.02 0c2.28-1.55 3.28-1.23 3.28-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Your Name · Built with ☕ and curiosity
+  </footer>
+
+</div>
+
+<script>
+  // ╔══════════════════════════════════════════════════════╗
+  // ║  🎯 在这里修改你的随机句子！                          ║
+  // ║  每次刷新页面或点击卡片，会随机展示其中一句            ║
+  // ╚══════════════════════════════════════════════════════╝
+  const quotes = [
+    "The only way to do great work is to love what you do. — Steve Jobs",
+    "Stay hungry, stay foolish. — Stewart Brand",
+    "科学的每一项巨大成就，都是以大胆的幻想为出发点的。 — 杜威",
+    "不积跬步，无以至千里；不积小流，无以成江海。 — 荀子",
+    "Research is what I'm doing when I don't know what I'm doing. — Wernher von Braun",
+    "The important thing is not to stop questioning. — Albert Einstein",
+    "纸上得来终觉浅，绝知此事要躬行。 — 陆游",
+    "学而不思则罔，思而不学则殆。 — 孔子",
+  ];
+
+  let lastIndex = -1;
+
+  function showNewQuote() {
+    const el = document.getElementById('quoteText');
+    // 淡出
+    el.style.opacity = '0';
+
+    setTimeout(() => {
+      // 避免连续显示同一句
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * quotes.length);
+      } while (idx === lastIndex && quotes.length > 1);
+      lastIndex = idx;
+
+      el.textContent = quotes[idx];
+      // 淡入
+      el.style.opacity = '1';
+    }, 300);
+  }
+
+  // 页面加载时显示第一句
+  showNewQuote();
+</script>
+</body>
+</html>
